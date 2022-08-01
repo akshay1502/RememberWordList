@@ -56,6 +56,7 @@ export default function Home() {
       >
         Play
       </button>
+      <footer>Created by <a href="https://github.com/akshay1502">Akshay</a></footer>
     </>
   )
 }

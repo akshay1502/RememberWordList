@@ -7,6 +7,7 @@ export default function Play() {
   const [input, setInput] = useState("");
   const [error, setError] = useState("");
   const inputRef = useRef(null);
+  console.log(Boolean(error || !input.length));
 
   const score = useSelector(state => state.remember.score);
   const retry = useSelector(state => state.remember.retry);

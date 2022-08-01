@@ -5,7 +5,7 @@ import _ from "lodash";
 export const createInputList = createAsyncThunk('remember/createInputList', async ({category, level}) => {
   const {data} = await import(`../../data/${category}`);
   let result = _.sampleSize(data, level);
-  return result;
+  return { result, level };
 })
 
 export const rememberSlice = createSlice({
@@ -18,13 +18,13 @@ export const rememberSlice = createSlice({
     },
     ansList: [],
     score: 0,
-    retry: 2,
+    retry: 0,
     playing: false
   },
   reducers: {
     addToAnsList: (state, action) => {
       const value = action.payload;
-      const success = state.inputList.list.includes(value);
+      const success = state.inputList.list.includes(value.toLowerCase());
       success ? state.score += 1 : state.retry -= 1;
       state.ansList.push({
         key: Math.random(),
@@ -36,7 +36,7 @@ export const rememberSlice = createSlice({
       state.inputList.list = [];
       state.ansList = [];
       state.score = 0;
-      state.retry = 2;
+      state.retry = 0;
       state.playing = false;
     }
   },
@@ -46,7 +46,8 @@ export const rememberSlice = createSlice({
       state.inputList.error = false;
     },
     [createInputList.fulfilled]: (state, action) => {
-      state.inputList.list = action.payload;
+      state.inputList.list = action.payload.result;
+      state.retry = action.payload.level === '10' ? 3 : 2;
       state.inputList.loading = false;
       state.playing = true;
     },
