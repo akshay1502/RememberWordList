@@ -58,6 +58,6 @@ export const rememberSlice = createSlice({
 })
 
 export const { 
-  addToAnsList
+  addToAnsList, cleanUpState
 } = rememberSlice.actions;
 export default rememberSlice.reducer;

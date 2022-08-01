@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
-import { addToAnsList } from "../../features/remember/rememberSlice";
+import { addToAnsList } from "../features/remember/rememberSlice";
 
 export default function Play() {
   const [input, setInput] = useState("");

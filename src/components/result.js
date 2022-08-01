@@ -1,5 +1,7 @@
 import { useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { cleanUpState } from "../features/remember/rememberSlice";
 
 export default function Result() {
   const navigate = useNavigate();
@@ -7,7 +9,9 @@ export default function Result() {
   state = state ?? {};
   const { target, score } = state ?? {};
   const success = target === score;
+  const dispatch = useDispatch();
   const navigateHome = () => {
+    dispatch(cleanUpState());
     navigate("/");
   }
   useEffect(() => {
