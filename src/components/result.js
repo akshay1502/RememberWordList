@@ -21,15 +21,19 @@ export default function Result() {
     if (target === 0) {
       navigate("/");
     }
+    window.addEventListener('popstate', function() {
+      dispatch(cleanUpState());
+      navigate('/');
+    });
   }, [target, score]);
   return(
-    <div>
+    <div className="result">
       <h1>You {`${success ? "WON" : "LOST"}`} { success 
         ? <span>&#127881; &#127882;</span>
         : <span>&#128532; &#128533;</span>
       }</h1>
-      <p>Your score {score} / {target}.</p>
-      <button onClick={() => navigateHome()} className="home">Home</button>
+      <p>Your score <b>{score} / {target}</b>.</p>
+      <button onClick={() => navigateHome()} className="btn hoverBtn">Home</button>
     </div>
   )
 }

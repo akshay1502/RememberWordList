@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
-import { addToAnsList } from "../features/remember/rememberSlice";
+import { addToAnsList, cleanUpState } from "../features/remember/rememberSlice";
 
 export default function Play() {
   const [input, setInput] = useState("");
@@ -35,6 +35,10 @@ export default function Play() {
     if (retry < 0 || score === target) {
       navigate('/result', { state: { target, score, retry }});
     }
+    window.addEventListener('popstate', function() {
+      dispatch(cleanUpState());
+      navigate('/');
+    });
   }, [score, retry, playing, target]);
   return(
     <>
@@ -62,14 +66,16 @@ export default function Play() {
           disabled={Boolean(error || !input.length)}
           >Add to List</button>
       </div>
-      {
-        ansList.map(obj => {
-          const {key, success, data} = obj;
-          return(
-            <p key={key} style={{ color: `${success ? 'green' : 'red'}`}}>{data}</p>
-          )
-        })
-      }
+      <div className="ansList">
+        {
+          ansList.map(obj => {
+            const {key, success, data} = obj;
+            return(
+              <p key={key} style={{ color: `${success ? 'green' : 'red'}`}}>{data}</p>
+            )
+          })
+        }
+      </div>
     </>
   )
 };

@@ -1,9 +1,12 @@
+/* eslint-disable no-restricted-globals */
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useLocation, useNavigate } from 'react-router-dom';
+import { cleanUpState } from "../features/remember/rememberSlice";
 
 export default function List() {
   const { state } = useLocation();
+  const dispatch = useDispatch();
   const [timer, setTimer] = useState(state === '5' 
     ? 30 
     : ( state === '8' 
@@ -20,9 +23,13 @@ export default function List() {
         navigate('/play');
       }
     }
+    window.addEventListener('popstate', function () {
+      dispatch(cleanUpState());
+      navigate('/');
+    });
   }, [timer, loading, error]);
   return(
-    <div>
+    <div className="list">
       {
         error && <strong>Retry or refresh!</strong>
       }
@@ -31,8 +38,9 @@ export default function List() {
           ? <span>Loading...</span>
           :
           <>
-            <h1>{timer}</h1>
-            <div>
+            <div>Moving back will result in restarting the game.</div>
+            <h1>{timer}s</h1>
+            <div className="inputList">
               {list.map((value, index) => {
                 return (
                   <p key={index}>{value}</p>
