@@ -1,38 +1,56 @@
-.App {
-  text-align: center;
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.app {
+  padding: 40px;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.selfList, .selfAnsList {
+  margin-top: 16px;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.rules {
+  list-style-position: inside;
+}
+.inputContainer {
+  margin: 32px 0;
+}
+.input {
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid grey;
+  font-size: 18px;
+  padding: 2px;
+  outline: none;
+}
+.input:focus {
+  border-color: black;
+}
+.addToList, .letsPlay, .addToAnsList, .home, .btn { 
+  padding: 4px;
+  display: block;
+  margin-top: 16px;
+}
+.letsPlay { margin-top: 32px;}
+.listEle {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  margin: 4px 0;
+  justify-content: space-between;
+}
+.listEle > p { font-size: 18px; }
+.listEle > button {
+  background: red;
   color: white;
+  font-weight: bold;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 16px;
 }
-
-.App-link {
-  color: #61dafb;
+.output {
+  margin: 8px 0;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.output > span {
+  margin-right: 16px;
 }
