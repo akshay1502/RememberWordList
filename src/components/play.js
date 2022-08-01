@@ -7,7 +7,6 @@ export default function Play() {
   const [input, setInput] = useState("");
   const [error, setError] = useState("");
   const inputRef = useRef(null);
-  console.log(Boolean(error || !input.length));
 
   const score = useSelector(state => state.remember.score);
   const retry = useSelector(state => state.remember.retry);
@@ -43,6 +42,7 @@ export default function Play() {
   }, [score, retry, playing, target]);
   return(
     <>
+      <div>Moving back will result in restarting the game.</div>
       <div className="output">
         <span>Score</span>
         <strong>{score} / {target}</strong>

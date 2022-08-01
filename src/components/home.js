@@ -29,7 +29,7 @@ export default function Home() {
       <h1>Remember Word List !!!</h1>
       <p>A fun game to improve your memory.</p>
       <br />
-      <p>Select any category and the level you want. On clicking play we will show you a list of words related to your selected category. You have to remember all the words before the time ends. After time ends, you will be asked to enter each word shown in the list. You will get only 2 retry for wrong words.</p>
+      <p>Select any category and the level you want. On clicking play we will show you a list of words related to your selected category. You have to remember all the words before the time ends. After time ends, you will be asked to enter each word shown in the list.</p>
       <div className="settings">
         <label>
           Category
