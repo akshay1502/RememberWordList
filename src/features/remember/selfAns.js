@@ -5,10 +5,8 @@ import InputContainer from "./inputContainer";
 import { addToAnsList } from "./rememberSlice";
 
 export default function SelfAns() {
-  const ansList = useSelector(state => state.remember.ansList);
-  const target = useSelector(state => state.remember.inputList.length);
-  const score = useSelector(state => state.remember.score);
-  const retry = useSelector(state => state.remember.retry);
+
+
   const navigate = useNavigate();
   useEffect(() => {
     console.log(target);
@@ -28,14 +26,7 @@ export default function SelfAns() {
   return(
     <div className="selfAnsList">
       <h1>Answer List.</h1>
-      <div className="output">
-        <span>Score</span>
-        <strong>{score} / {target}</strong>
-      </div>
-      <div className="output">
-        <span>Retry</span>
-        <strong>{retry}</strong>
-      </div>
+
       <InputContainer action={addToAnsList}/>
       <div>
         {
