@@ -20,7 +20,7 @@ export default function Play() {
   const handleInput = (e) => {
     const value = e.target.value;
     setInput(value);
-    const errMsg = !/^[a-z]+$/g.test(value) ? "Only smallcase letters are allowed." : "";
+    const errMsg = !/^[a-zA-Z]+$/g.test(value) ? "Only alphabets are allowed." : "";
     setError(errMsg);
   }
   const handleAddToAnsList = () => {
@@ -28,21 +28,22 @@ export default function Play() {
     setInput("");
     inputRef.current.focus();
   }
+  const handleEnter = (e) => {
+    if (e.key == 'Enter') {
+      handleAddToAnsList();
+    }
+  }
   useEffect(() => {
-    if (!playing) {
-      navigate('/');
+    if(!playing) {
+      navigate('/', {replace: true});
     }
     if (retry < 0 || score === target) {
-      navigate('/result', { state: { target, score, retry }});
+      navigate('/result', { state: { target, score, retry }, replace: true});
     }
-    window.addEventListener('popstate', function() {
-      dispatch(cleanUpState());
-      navigate('/');
-    });
   }, [score, retry, playing, target]);
   return(
     <>
-      <div>Moving back will result in restarting the game.</div>
+      <div className="caution">!!!Moving back will result in restarting the game.</div>
       <div className="output">
         <span>Score</span>
         <strong>{score} / {target}</strong>
@@ -56,6 +57,7 @@ export default function Play() {
           type="text"
           value={input}
           onChange={(e) => handleInput(e)}
+          onKeyDown={(e) => handleEnter(e)}
           ref={inputRef}
           className="input"
           placeholder="Enter word"

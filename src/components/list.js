@@ -2,12 +2,11 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation, useNavigate } from 'react-router-dom';
-import { cleanUpState } from "../features/remember/rememberSlice";
 
 export default function List() {
   const { state } = useLocation();
-  const dispatch = useDispatch();
-  const [timer, setTimer] = useState(state === '5' 
+  const { level, playing } = state;
+  const [timer, setTimer] = useState(level === '5' 
     ? 30 
     : ( state === '8' 
       ? 45 
@@ -17,16 +16,15 @@ export default function List() {
   const {loading, error, list} = useSelector(state => state.remember.inputList);
   const navigate = useNavigate();
   useEffect(() => {
+    if(!playing) {
+      navigate('/', {replace: true})
+    }
     if(!loading && !error) {
       setTimeout(() => setTimer(timer - 1), 1000);
       if (timer === 0) {
-        navigate('/play');
+        navigate('/play', {replace: true});
       }
     }
-    window.addEventListener('popstate', function () {
-      dispatch(cleanUpState());
-      navigate('/');
-    });
   }, [timer, loading, error]);
   return(
     <div className="list">
@@ -38,7 +36,7 @@ export default function List() {
           ? <span>Loading...</span>
           :
           <>
-            <div>Moving back will result in restarting the game.</div>
+            <div className="caution">!!!Moving back will result in restarting the game.</div>
             <h1>{timer}s</h1>
             <div className="inputList">
               {list.map((value, index) => {

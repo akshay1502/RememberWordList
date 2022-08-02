@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import _ from "lodash";
+import { useNavigate } from "react-router-dom";
 
 
 export const createInputList = createAsyncThunk('remember/createInputList', async ({category, level}) => {
@@ -46,10 +47,10 @@ export const rememberSlice = createSlice({
       state.inputList.error = false;
     },
     [createInputList.fulfilled]: (state, action) => {
+      state.playing = true;
       state.inputList.list = action.payload.result;
       state.retry = action.payload.level === '10' ? 3 : 2;
       state.inputList.loading = false;
-      state.playing = true;
     },
     [createInputList.rejected]: (state) => {
       state.inputList.loading = false;

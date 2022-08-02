@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
-import { createInputList } from "../features/remember/rememberSlice";
+import { cleanUpState, createInputList } from "../features/remember/rememberSlice";
 
 export default function Home() {
   const [settings, setSettings] = useState({
@@ -21,9 +21,8 @@ export default function Home() {
 
   const handleCreateInputList = () => {
     dispatch(createInputList(settings));
-    navigate("/list", { state: settings.level })
+    navigate("/list", { state: { level: settings.level, playing: true}})
   }
-  
   return(
     <>
       <h1>Remember Word List !!!</h1>
