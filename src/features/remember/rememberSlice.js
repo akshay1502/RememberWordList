@@ -1,77 +1,65 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import _ from "lodash";
+import { useNavigate } from "react-router-dom";
 
 
-export const createInputList = createAsyncThunk('remember/createInputList', async ({fileName, number}) => {
-  const {data} = await import(`../../data/${fileName}`);
-  let randomData = _.sampleSize(data, 5);
-  let result = randomData.map(data => ({
-    key: Math.random(),
-    data
-  }))
-  return result;
+export const createInputList = createAsyncThunk('remember/createInputList', async ({category, level}) => {
+  const {data} = await import(`../../data/${category}`);
+  let result = _.sampleSize(data, level);
+  return { result, level };
 })
 
 export const rememberSlice = createSlice({
   name: 'remember',
   initialState: {
-    pending: false,
-    error: false,
-    inputList: [],
+    inputList: {
+      list: [],
+      loading: false,
+      error: false
+    },
     ansList: [],
     score: 0,
-    retry: 2
+    retry: 0,
+    playing: false
   },
   reducers: {
-    addToInputList: (state, action) => {
-      const data = action.payload;
-      const condition = state.inputList.some((obj) => obj.data === data);
-      const maxlength = state.inputList.length < 10;
-      if(!condition && maxlength) {
-        state.inputList.push({
-          key: Date.now(),
-          data: action.payload
-        })
-      } else if (!maxlength) {
-        alert("Maximum 10 words are allowed. You have reached max limit. You can play the game now.")
-      }else {
-        alert("Duplicate words are not allowed.")
-      }
-    },
-    removeFromInputList: (state, action) => {
-      state.inputList = state.inputList.filter((obj) => obj.key !== action.payload);
-    },
     addToAnsList: (state, action) => {
-      const success = state.inputList.some((obj) => obj.data === action.payload);
+      const value = action.payload;
+      const success = state.inputList.list.includes(value.toLowerCase());
       success ? state.score += 1 : state.retry -= 1;
-      if (state.retry >= 0) {
-        state.ansList.push({
-          key: Date.now(),
-          success,
-          data: action.payload
-        })
-      } else {
-        alert('You lost');
-      }
+      state.ansList.push({
+        key: Math.random(),
+        success,
+        data: value
+      });
     },
+    cleanUpState: (state, action) => {
+      state.inputList.list = [];
+      state.ansList = [];
+      state.score = 0;
+      state.retry = 0;
+      state.playing = false;
+    }
   },
   extraReducers: {
     [createInputList.pending]: (state) => {
-      state.pending = true;
-      state.error = false;
+      state.inputList.loading = true;
+      state.inputList.error = false;
     },
     [createInputList.fulfilled]: (state, action) => {
-      state.inputList = action.payload;
-      state.pending = false;
+      state.playing = true;
+      state.inputList.list = action.payload.result;
+      state.retry = action.payload.level === '10' ? 3 : 2;
+      state.inputList.loading = false;
     },
     [createInputList.rejected]: (state) => {
-      state.pending = false;
-      state.error = true;
+      state.inputList.loading = false;
+      state.inputList.error = true;
     },
   }
 })
 
 export const { 
-  addToInputList, removeFromInputList, addToAnsList
+  addToAnsList, cleanUpState
 } = rememberSlice.actions;
 export default rememberSlice.reducer;
