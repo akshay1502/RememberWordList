@@ -35,7 +35,6 @@ export const data = [
   "cyan",
   "azure",
   "beige",
-  "off white",
   "turquoise",
   "amber",
   "mint"
