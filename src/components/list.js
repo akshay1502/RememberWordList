@@ -8,9 +8,9 @@ export default function List() {
   const { level, playing } = state;
   const [timer, setTimer] = useState(level === '5' 
     ? 30 
-    : ( state === '8' 
+    : ( level === '8' 
       ? 45 
-      : (state === '10' 
+      : (level === '10' 
         ? 60 
         : 0)));
   const {loading, error, list} = useSelector(state => state.remember.inputList);
