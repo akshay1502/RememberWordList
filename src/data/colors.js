@@ -37,5 +37,5 @@ export const data = [
   "beige",
   "turquoise",
   "amber",
-  "mint"
-]
+  "mint",
+];

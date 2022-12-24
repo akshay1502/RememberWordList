@@ -1,9 +1,9 @@
-import './App.css';
+import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import Home from './components/home';
-import Result from './components/result';
-import Play from './components/play';
-import List from './components/list';
+import Home from "./components/home";
+import Result from "./components/result";
+import Play from "./components/play";
+import List from "./components/list";
 
 function App() {
   return (
@@ -19,3 +19,4 @@ function App() {
 }
 
 export default App;
+

@@ -1,36 +1,37 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import _ from "lodash";
-import { useNavigate } from "react-router-dom";
 
-
-export const createInputList = createAsyncThunk('remember/createInputList', async ({category, level}) => {
-  const {data} = await import(`../../data/${category}`);
-  let result = _.sampleSize(data, level);
-  return { result, level };
-})
+export const createInputList = createAsyncThunk(
+  "remember/createInputList",
+  async ({ category, level }) => {
+    const { data } = await import(`../../data/${category}`);
+    let result = _.sampleSize(data, level);
+    return { result, level };
+  }
+);
 
 export const rememberSlice = createSlice({
-  name: 'remember',
+  name: "remember",
   initialState: {
     inputList: {
       list: [],
       loading: false,
-      error: false
+      error: false,
     },
     ansList: [],
     score: 0,
     retry: 0,
-    playing: false
+    playing: false,
   },
   reducers: {
     addToAnsList: (state, action) => {
       const value = action.payload;
       const success = state.inputList.list.includes(value.toLowerCase());
-      success ? state.score += 1 : state.retry -= 1;
+      success ? (state.score += 1) : (state.retry -= 1);
       state.ansList.push({
         key: Math.random(),
         success,
-        data: value
+        data: value,
       });
     },
     cleanUpState: (state, action) => {
@@ -39,7 +40,7 @@ export const rememberSlice = createSlice({
       state.score = 0;
       state.retry = 0;
       state.playing = false;
-    }
+    },
   },
   extraReducers: {
     [createInputList.pending]: (state) => {
@@ -49,17 +50,15 @@ export const rememberSlice = createSlice({
     [createInputList.fulfilled]: (state, action) => {
       state.playing = true;
       state.inputList.list = action.payload.result;
-      state.retry = action.payload.level === '10' ? 3 : 2;
+      state.retry = action.payload.level === "10" ? 3 : 2;
       state.inputList.loading = false;
     },
     [createInputList.rejected]: (state) => {
       state.inputList.loading = false;
       state.inputList.error = true;
     },
-  }
-})
+  },
+});
 
-export const { 
-  addToAnsList, cleanUpState
-} = rememberSlice.actions;
+export const { addToAnsList, cleanUpState } = rememberSlice.actions;
 export default rememberSlice.reducer;

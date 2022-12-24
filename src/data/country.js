@@ -79,5 +79,5 @@ export const data = [
   "vietnam",
   "yemen",
   "zambia",
-  "zimbabwe"
-]
+  "zimbabwe",
+];

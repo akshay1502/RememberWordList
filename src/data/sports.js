@@ -26,5 +26,5 @@ export const data = [
   "gymnastics",
   "taekwondo",
   "fencing",
-  "judo"
-]
+  "judo",
+];

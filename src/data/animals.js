@@ -23,5 +23,5 @@ export const data = [
   "wolverine",
   "horse",
   "wolf",
-  "fox" 
-]
+  "fox",
+];

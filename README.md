@@ -2,7 +2,7 @@
 
 A fun game to improve your memorizing power.
 <br>
-Play the game on https://rememberwordlist.herokuapp.com/
+Play the game on https://rememberwordlist.netlify.app/
 
 ## How to run the project
 - clone the repo

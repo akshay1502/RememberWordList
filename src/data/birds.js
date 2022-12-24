@@ -18,5 +18,5 @@ export const data = [
   "penguin",
   "turkey",
   "rooster",
-  "vulture"
+  "vulture",
 ];
